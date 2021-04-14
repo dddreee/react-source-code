@@ -236,6 +236,12 @@ const PageReducer: Reducer<PageState> = (state = initState, action: DemoAction<a
 
 ### useState
 
+```ts
+
+```
+
+
+
 ```tsx
 import React, { useState } from 'react'
 
@@ -245,6 +251,19 @@ const Demo: React.FC = (): React.ReactElement => {
         setCount(count + 1)
     }
     return <div onClick={addCount}>{count}</div>
+}
+```
+
+
+
+### useRef
+
+```tsx
+import React, { useRef } from 'react'
+
+const Demo: React.FC = (): React.ReactElement => {
+    const divRef = useRef <HTMLDivElement | null> (null)
+    return <div ref={divRef}>123</div>
 }
 ```
 
