@@ -236,12 +236,6 @@ const PageReducer: Reducer<PageState> = (state = initState, action: DemoAction<a
 
 ### useState
 
-```ts
-
-```
-
-
-
 ```tsx
 import React, { useState } from 'react'
 
@@ -266,8 +260,6 @@ const Demo: React.FC = (): React.ReactElement => {
     return <div ref={divRef}>123</div>
 }
 ```
-
-
 
 
 
