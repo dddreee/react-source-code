@@ -135,6 +135,7 @@ export type Action_Type = UPDATE_CURRENT | UPDATE_SIZE
 // store/action.tsx
 import * as Constants from './contants'
 import { Dispatch } from 'redux'
+import { AnyAction } from 'redux-thunk'
 
 const {
     UPDATE_SIZE,
@@ -229,6 +230,14 @@ const PageReducer: Reducer<PageState> = (state = initState, action: DemoAction<a
   // Reducer 类型接收一个泛型 S（就是state对应的类型）并且返回这个 S
   export type Reducer<S> = <A extends Action>(state: S, action: A) => S
   ```
+
+### connect
+
+在v7.1.2 版本里（当前咱们使用的是 5.1.2 版本，计划升级到最新版本，老的api全兼容的），`@types/react-redux` 有一个工具类型 `ConnectedProps`，可以提取 `mapStateToProps` 和 `mapDispatchToProps` 
+
+```tsx
+
+```
 
 
 
