@@ -70,3 +70,34 @@ export default createConnect()
 
 这里挺奇怪的 `react-redux` 并没有开放 `createConnect` 这个api，然后又给这个方法传入了默认的参数，这么做有啥意义呢？仅从注释上来看，这个就是为了测试和扩展的时候能够尝试一些不同的配置选项，但是全局搜索了这个方法，并没有其他地方有使用。。。就先略过吧
 
+
+
+返回的 `connect` 方法就是项目中经常用到的了，在绝大多数情况下只需要传入2个参数就可以了，而`connect` 其实可以接收4个参数
+
+- mapStateToProps
+- mapDispatchToProps
+- [mergeProps](https://react-redux.js.org/api/connect#mergeprops-stateprops-dispatchprops-ownprops--object)
+- [options](https://react-redux.js.org/api/connect#options-object) (第四个参数)
+
+前两个参数不用多说了，具体讲讲 `mergeProps` 和 第四个参数（暂时叫它 `options` 吧）
+
+### `mergeProps?: (stateProps, dispatchProps, ownProps) => Object`
+
+其实就是一个方法，接收3个参数，返回一个对象，可以将这个对象称为 `mergedProps` 并且会用做 wrapped component 的props。如果不传的话，会默认返回 `{ ...ownProps, ...stateProps, ...dispatchProps }`
+
+### `options?: Object`
+
+```javascript
+{
+  context?: Object,
+  pure?: boolean,
+  areStatesEqual?: Function,
+  areOwnPropsEqual?: Function,
+  areStatePropsEqual?: Function,
+  areMergedPropsEqual?: Function,
+  forwardRef?: boolean,
+}
+```
+
+> context v6.0 才开始支持
+
