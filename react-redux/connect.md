@@ -99,5 +99,8 @@ export default createConnect()
 }
 ```
 
-> context v6.0 才开始支持
+> context 和 forwardRef v6.0 才开始支持
 
+- pure 默认是true，如果是true，包装组件就会跟 PureComponent 一样
+- xxxxEqual 这类的都是传入的一个比对函数，本身这些比对函数都有默认值并且适用于99%的情况
+- forwardRef 如果为true，那么就会将包装组件上的ref传递给被包装的组件的实例
