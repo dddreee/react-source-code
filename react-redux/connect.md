@@ -266,5 +266,11 @@ export function wrapMapToPropsFunc(mapToProps, methodName) {
 
 `wrapMapToPropsFunc(mapStateToProps, 'mapStateToProps')` 会返回一个 `initProxySelector ` 。
 
+
+
+
+
+
+
 ## connectHOC (connectAdvanced)
 
