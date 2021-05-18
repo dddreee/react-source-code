@@ -266,9 +266,11 @@ export function wrapMapToPropsFunc(mapToProps, methodName) {
 
 `wrapMapToPropsFunc(mapStateToProps, 'mapStateToProps')` 会返回一个 `initProxySelector ` 。
 
+干巴巴的写了这么多理解起来有点费劲，直接写个demo下
 
 
 
+`initMapStateToProps` 和 `initMapDispatchToProps` 最终的值都是上面那个`wrapMapToPropsFunc` 执行之后返回的 `initProxySelector` 函数，并且 `initProxySelector` 中的 `proxy` 的 `mapToProps` 方法在第一次执行的会把 `initMapStateToProps` 或者 `initMapDispatchToProps` 赋值过去
 
 
 
