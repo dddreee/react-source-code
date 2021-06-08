@@ -167,6 +167,55 @@ const mapDispatchToPropsFactories = [
   whenMapDispatchToPropsIsMissing,
   whenMapDispatchToPropsIsObject
 ]
-const initMapDispatchToProps = match(mapDispatchToProps, mapDispatchToPropsFactories, 'mapDispatchToProps')
 
-// 跟上面那个 initMapStateToProps 也是一样的，最终返回一个
+/**
+ * const initMapDispatchToProps = match(mapDispatchToProps, mapDispatchToPropsFactories, 'mapDispatchToProps')
+ * 如果 mapDispatchToProps 是函数，会跟 mapStateToProps 是函数的情况一样，执行 wrapMapToPropsFunc 返回一个 initProxySelector 函数
+ * 如果 mapDispatchToProps 是对象，会执行 wrapMapToPropsConstant 函数返回一个 initConstantSelector
+ */
+ function wrapMapToPropsConstant(getConstant) {
+  return function initConstantSelector(dispatch, options) {
+    const constant = getConstant(dispatch, options)
+
+    function constantSelector() { return constant }
+    constantSelector.dependsOnOwnProps = false 
+    return constantSelector
+  }
+}
+// 中台项目中，一般 mapDispatchToProps 都是对象类型
+const initMapDispatchToProps =  wrapMapToPropsConstant(dispatch => bindActionCreators(mapDispatchToProps, dispatch))
+
+/**
+ * ***********************************************************************************************
+ * ***********************************************************************************************
+ * ***********************************************************************************************
+ * selectorFactory
+ * 将 所有state dispatch ownedProps .... 合并成一个props对象
+ * ***********************************************************************************************
+ */
+ export default function finalPropsSelectorFactory(dispatch, {
+  initMapStateToProps,
+  initMapDispatchToProps,
+  initMergeProps,
+  ...options
+}) {
+  const mapStateToProps = initMapStateToProps(dispatch, options)
+  const mapDispatchToProps = initMapDispatchToProps(dispatch, options)
+  const mergeProps = initMergeProps(dispatch, options)
+
+  if (process.env.NODE_ENV !== 'production') {
+    verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, options.displayName)
+  }
+
+  const selectorFactory = options.pure
+    ? pureFinalPropsSelectorFactory
+    : impureFinalPropsSelectorFactory
+
+  return selectorFactory(
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps,
+    dispatch,
+    options
+  )
+}
